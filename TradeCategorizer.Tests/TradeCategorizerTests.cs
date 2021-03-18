@@ -9,7 +9,6 @@ namespace TradeCategorizer.Tests
 {
     public class TradeCategorizerTests : IClassFixture<TradeCategorizerTestsFixture>
     {
-        private readonly TradeCategorizerTestsFixture _fixture;
         private readonly ITradeRulesCategorizerService _tradeRulesCategorizerService;
         private readonly IExecutionConfigurationService _executionConfigurationService;
 

@@ -14,6 +14,10 @@ namespace TradeCategorizer.Services
     {
         private readonly IEnumerable<ITradeRule> _tradeRules;
 
+        /// <summary>
+        /// Service for categorizing Trades
+        /// </summary>
+        /// <param name="tradeRules"></param>
         public TradeRulesCategorizerService(IEnumerable<ITradeRule> tradeRules)
         {
             _tradeRules = tradeRules.OrderBy(rule => rule.GetPrecedence());
@@ -24,7 +28,7 @@ namespace TradeCategorizer.Services
         /// There is a fallback rule <see cref="UncategorizedTradeRule"/> if all other rules fail.
         /// </summary>
         /// <param name="trade">Trade being categorized.</param>
-        /// <returns>The category of the trade.</returns>
+        /// <returns>The category of the Trade.</returns>
         public TradeCategory CategorizeTrade(Trade trade)
         {
             return _tradeRules

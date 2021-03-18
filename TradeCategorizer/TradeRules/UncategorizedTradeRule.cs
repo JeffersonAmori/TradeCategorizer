@@ -4,6 +4,9 @@ using TradeCategorizer.TradeRules.Interfaces;
 
 namespace TradeCategorizer.TradeRules
 {
+    /// <summary>
+    /// Fallback rule. This will be checked when any other Rule match.
+    /// </summary>
     public class UncategorizedTradeRule : ITradeRule
     {
 

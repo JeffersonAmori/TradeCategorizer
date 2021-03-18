@@ -5,9 +5,12 @@ using TradeCategorizer.TradeRules.Interfaces;
 
 namespace TradeCategorizer.TradeRules
 {
+    /// <summary>
+    /// Rule for Trades passed the Next Payment date
+    /// </summary>
     public class DefaultedTradeRule : ITradeRule
     {
-        private IExecutionConfigurationService _executionConfigurationService;
+        private readonly IExecutionConfigurationService _executionConfigurationService;
 
         public DefaultedTradeRule(IExecutionConfigurationService executionConfigurationService)
         {

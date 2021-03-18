@@ -54,7 +54,7 @@ namespace TradeCategorizer
             executionConfigurationService.SetReferenceDate(referenceDate);
 
             string secondLine = fileLines[lineNumberForNumberOfTradesInPortfolio];
-            if (!uint.TryParse(secondLine, out uint numberOfTradesInPortfolio))
+            if (!uint.TryParse(secondLine, out _))
             {
                 validationMessage = "Number of trades in portfolio is not a valid number (line 2).";
                 return false;

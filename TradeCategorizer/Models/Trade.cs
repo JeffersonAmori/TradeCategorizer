@@ -7,8 +7,17 @@ namespace TradeCategorizer.Models
     /// </summary>
     public class Trade
     {
+        /// <summary>
+        /// Instanciate a Trade
+        /// </summary>
         public Trade() { }
 
+        /// <summary>
+        /// Instanciate a Trade
+        /// </summary>
+        /// <param name="value">Value of the Trade</param>
+        /// <param name="clientSector">Client Sector of the Trade</param>
+        /// <param name="nextPaymentDate">Next Payment Date of the Trade</param>
         public Trade(double value, string clientSector, DateTime nextPaymentDate)
         {
             Value = value;

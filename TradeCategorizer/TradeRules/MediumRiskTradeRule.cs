@@ -4,6 +4,9 @@ using TradeCategorizer.TradeRules.Interfaces;
 
 namespace TradeCategorizer.TradeRules
 {
+    /// <summary>
+    /// Rule for Medium Risk Trades
+    /// </summary>
     public class MediumRiskTradeRule : ITradeRule
     {
         /// <summary>
