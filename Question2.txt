@@ -1,0 +1,1 @@
+Besides adding the Pep property to the Trade object, change the method CreateTradeFromString to account for the new property, implement the PepTradeRule using the interface ITradeRule and add the the Pep value to the enum TradeCategory.

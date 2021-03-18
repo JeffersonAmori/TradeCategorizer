@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeCategorizer", "TradeCategorizer\TradeCategorizer.csproj", "{C2806275-7507-4F52-B0F1-7D98529E2B53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeCategorizer.Tests", "TradeCategorizer.Tests\TradeCategorizer.Tests.csproj", "{DD3FE8A8-4C22-4E7F-A7F9-416C1D4AFF5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradeCategorizer.Tests", "TradeCategorizer.Tests\TradeCategorizer.Tests.csproj", "{DD3FE8A8-4C22-4E7F-A7F9-416C1D4AFF5A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{04C8FE8E-CE5F-4AE7-B04C-DDF966C96D74}"
+	ProjectSection(SolutionItems) = preProject
+		Problem.pdf = Problem.pdf
+		Question2.txt = Question2.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
