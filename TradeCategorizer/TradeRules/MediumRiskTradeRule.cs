@@ -33,7 +33,7 @@ namespace TradeCategorizer.TradeRules
         /// <returns>The category of the trade</returns>
         public bool IsMatch(Trade trade)
         {
-            return (trade.Value > 1000000 && trade.ClientSector.ToUpper() == "PUBLIC");
+            return (trade.Value > 1000000 && trade.ClientSector.ToUpperInvariant() == ClientSector.Public);
         }
     }
 }
