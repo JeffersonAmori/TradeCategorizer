@@ -12,9 +12,9 @@ namespace TradeCategorizer
     class Program
     {
         private const int lineNumberForNumberOfTradesInPortfolio = 1;
-        private const int numberOfExpectedColumnsInTradeLine = 3;
         private static IExecutionConfigurationService _executionConfigurationService;
         private static ITradeRulesCategorizerService _tradeRulesCategorizerService;
+        private static IInputValidationService _InputValidationService;
 
         static void Main(string[] args)
         {
@@ -22,11 +22,12 @@ namespace TradeCategorizer
             {
                 var serviceProvider = ConfigureServices();
 
-                SetUp(serviceProvider);
+                Init(serviceProvider);
 
                 var fileLines = File.ReadAllLines("F:\\portfolio.txt");
 
-                ValidateHeaderData(fileLines);
+                if (!_InputValidationService.ValidateHeaderData(fileLines, out string errorMessage))
+                    throw new InvalidDataException(errorMessage);
 
                 string referenceDateLine = fileLines[0];
                 _executionConfigurationService.SetReferenceDate(DateTime.Parse(referenceDateLine));
@@ -64,65 +65,29 @@ namespace TradeCategorizer
 
             serviceCollection.AddSingleton(typeof(ITradeRulesCategorizerService), typeof(TradeRulesCategorizerService));
             serviceCollection.AddSingleton(typeof(IExecutionConfigurationService), typeof(ExecutionConfigurationService));
+            serviceCollection.AddSingleton(typeof(IInputValidationService), typeof(InputValidationService));
 
             return serviceCollection.BuildServiceProvider();
         }
 
-        private static void SetUp(ServiceProvider serviceProvider)
+        private static void Init(ServiceProvider serviceProvider)
         {
             _executionConfigurationService = serviceProvider.GetService<IExecutionConfigurationService>();
             _tradeRulesCategorizerService = serviceProvider.GetService<ITradeRulesCategorizerService>();
-        }
-
-        private static void ValidateHeaderData(string[] fileLines)
-        {
-            string referenceDateLine = fileLines[0];
-            if (!DateTime.TryParse(referenceDateLine, out _))
-            {
-                throw new InvalidDataException("Reference date in file is not a valid date (line 1).");
-            }
-
-            string secondLine = fileLines[lineNumberForNumberOfTradesInPortfolio];
-            if (!uint.TryParse(secondLine, out _))
-            {
-                throw new InvalidDataException("Number of trades in portfolio is not a valid number (line 2).");
-            }
+            _InputValidationService = serviceProvider.GetService<IInputValidationService>();
         }
 
         private static Trade CreateTradeFromString(string fileLine)
         {
             var tradeInfo = fileLine.Split(" ");
-            ValidateTradeInfo(fileLine, tradeInfo);
+            if (!_InputValidationService.ValidateTradeInfo(fileLine, out string errorMessage))
+                throw new InvalidDataException(errorMessage);
 
             var trade = new Trade(value: double.Parse(tradeInfo[0]),
                                   clientSector: tradeInfo[1],
                                   nextPaymentDate: DateTime.Parse(tradeInfo[2]));
+
             return trade;
-        }
-
-        private static void ValidateTradeInfo(string fileLine, string[] tradeInfo)
-        {
-            if (tradeInfo.Length != numberOfExpectedColumnsInTradeLine)
-            {
-                throw new InvalidDataException($"Invalid Number of columns, should be {numberOfExpectedColumnsInTradeLine}. Line with error: {fileLine}");
-            }
-
-            if (!double.TryParse(tradeInfo[0], out _))
-            {
-                throw new InvalidDataException($"Value of trade expected to be a number but actual value is {tradeInfo[0]}. Line with error: {fileLine}");
-            }
-
-            string clientSector = tradeInfo[1];
-            if (clientSector.ToUpperInvariant() != ClientSector.Private &&
-                clientSector.ToUpperInvariant() != ClientSector.Public)
-            {
-                throw new InvalidDataException($"Sector of client is expected to be one of the following: {string.Join(", ", typeof(ClientSector).GetFields().Select(m => m.Name))}. But actual value is {clientSector}. Line with error: {fileLine}");
-            }
-
-            if (!DateTime.TryParse(tradeInfo[2], out DateTime tradeNextPaymentDate))
-            {
-                throw new InvalidDataException($"Next payment date of trade is expected to be a date but actual value is {tradeNextPaymentDate}. Line with error: {fileLine}");
-            }
         }
     }
 }

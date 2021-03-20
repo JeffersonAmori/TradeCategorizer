@@ -1,9 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TradeCategorizer.Services;
 using TradeCategorizer.TradeRules.Interfaces;
 
@@ -34,6 +30,8 @@ namespace TradeCategorizer.Tests
 
             serviceCollection.AddSingleton(typeof(ITradeRulesCategorizerService), typeof(TradeRulesCategorizerService));
             serviceCollection.AddSingleton(typeof(IExecutionConfigurationService), typeof(ExecutionConfigurationService));
+            serviceCollection.AddSingleton(typeof(IInputValidationService), typeof(InputValidationService));
+
 
             return serviceCollection.BuildServiceProvider();
         }
